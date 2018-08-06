@@ -30,15 +30,16 @@
             'w':"weibo.com",
             'e':"ele.me",
             'r':"renren.com",
-            't':"tianya.com",
+            't':"tianya.cn",
             'y':"youtube.com",
-            'u':"uc.com",
+            'u':"uc.cn",
             'i':"iqiyi.com",
             'o':"opera.com",
-            'a':"acfun.tv",
+            'a':"acfun.cn",
             's':"sohu.com",
             'z':"zhihu.com",
-            'm':"mcdonalds.com.cn"
+            'd':"douyu.com",
+            'l':"lol.qq.com"
         };
 
         //取出新hash并覆盖
@@ -61,19 +62,25 @@
                     var kbdKey=kbd.target.firstChild.data;
                     window.open("http://"+hash[kbdKey],"_blank");
                 };
+                //给kbd添加img
+                var imgObj=document.createElement("img");
+                kbdObj.appendChild(imgObj);
+                if (hash[rows[j]]){
+                    imgObj.src="http://"+hash[rows[j]]+"/favicon.ico";
+                }else{
+                    imgObj.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
+                }
+                //如果获取不到ico图标时也显示小点
+                imgObj.onerror=function (e) {
+                    e.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
+                };
+                //给kbd添加button按钮
                 var btnObj=document.createElement("button");
                 kbdObj.appendChild(btnObj);
+                btnObj.title="编辑";
                 btnObj.textContent="E";
                 //kbdObj.textContent(keys[i][j]);//此时需要在两个不同的循环内，所以需要将keys[i取出]
                 btnObj.id=rows[j];//给btn按钮添加id，通过动态方式添加，所以在循环内
-                btnObj.onclick=function (yyy) {//添加点击事件
-                    var btnKey=yyy.target.id;//获取到按钮的id
-                    var website=prompt("请输入新网址");
-                    hash[btnKey]=website;//把收到的新网址传到hash中
-                    //每添加新网址就将变化存在备份中
-                    localStorage.setItem("www" , JSON.stringify(hash));
-                    yyy.stopPropagation();
-                };
             }
         }
 
@@ -84,8 +91,15 @@
             //此时给点击的按钮添加跳转网页事件
             //还要从hash桶中取出对应的网址hash[keyObj]//为什么这里要用这个形式
             window.open("http://"+hash[keyObj],"_blank");
-        }
-
+        };
+        btnObj.onclick=function (yyy) {//添加点击事件
+            var btnKey=yyy.target.id;//获取到按钮的id
+            var website=prompt("请输入新网址");
+            hash[btnKey]=website;//把收到的新网址传到hash中
+            //每添加新网址就将变化存在备份中
+            localStorage.setItem("www" , JSON.stringify(hash));
+            yyy.stopPropagation();//阻止事件冒泡
+        };
 
 
 
