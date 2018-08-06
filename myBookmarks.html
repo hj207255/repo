@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航网站</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header></header>
+    <main>
+        <div class="main" id="mainBar">
+
+        </div>
+    </main>
+    <footer></footer>
+
+
+
+
+
+    <script>
+        var keys={
+            '0':{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
+            '1':{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:"l",length:9},
+            '2':{0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m',length:7},
+            'length':'3'
+        };
+        var hash={
+            'q':"qq.com",
+            'w':"weibo.com",
+            'e':"ele.me",
+            'r':"renren.com",
+            't':"tianya.com",
+            'y':"youtube.com",
+            'u':"uc.com",
+            'i':"iqiyi.com",
+            'o':"opera.com",
+            'a':"acfun.tv",
+            's':"sohu.com",
+            'z':"zhihu.com",
+            'm':"mcdonalds.com.cn"
+        };
+
+        //取出新hash并覆盖
+        var a=JSON.parse(localStorage.getItem("www") || "null");
+        if (a){
+             hash=a;
+        }
+
+        //循环遍历keys数组，创建三个横向div
+        for(var i=0;i<keys.length;i++){
+            var divObj=document.createElement("div");
+            document.getElementById("mainBar").appendChild(divObj);
+            var rows=keys[i];//获取到每个keys的数组
+            for(var j=0;j<keys[i].length;j++){
+                var kbdObj=document.createElement("kbd");
+                kbdObj.textContent=rows[j];
+                divObj.appendChild(kbdObj);
+                //给kbd添加点击事件
+                kbdObj.onclick=function (kbd) {
+                    var kbdKey=kbd.target.firstChild.data;
+                    window.open("http://"+hash[kbdKey],"_blank");
+                };
+                var btnObj=document.createElement("button");
+                kbdObj.appendChild(btnObj);
+                btnObj.textContent="E";
+                //kbdObj.textContent(keys[i][j]);//此时需要在两个不同的循环内，所以需要将keys[i取出]
+                btnObj.id=rows[j];//给btn按钮添加id，通过动态方式添加，所以在循环内
+                btnObj.onclick=function (yyy) {//添加点击事件
+                    var btnKey=yyy.target.id;//获取到按钮的id
+                    var website=prompt("请输入新网址");
+                    hash[btnKey]=website;//把收到的新网址传到hash中
+                    //每添加新网址就将变化存在备份中
+                    localStorage.setItem("www" , JSON.stringify(hash));
+                    yyy.stopPropagation();
+                };
+            }
+        }
+
+        //console.log(hash.q);为什么这里可以用点出来，下边就不行
+        //给文档创建键盘点击事件以触发点击跳转页面
+        document.onkeypress=function (xxx) {
+            var keyObj=xxx.key;
+            //此时给点击的按钮添加跳转网页事件
+            //还要从hash桶中取出对应的网址hash[keyObj]//为什么这里要用这个形式
+            window.open("http://"+hash[keyObj],"_blank");
+        }
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

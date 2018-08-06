@@ -1,0 +1,47 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+main{
+    text-align: center;
+}
+.main{
+    display: inline-block;
+}
+.main div{
+    margin-top: 5px;
+}
+kbd{
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    border: 1px solid #ccc;
+    margin-left: 5px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    text-transform: uppercase;
+    font-weight: 700;
+    position: relative;
+    cursor: pointer;
+}
+button{
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    display: none;
+    background-color: orange;
+    color: #fff;
+    border: 0;
+    height: 15px;
+    width: 15px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 15px;
+    outline: none;
+    cursor: pointer;
+}
+kbd:hover button{
+    display: block;
+}
